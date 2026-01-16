@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import Card from 'components/card/Card';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { FiClipboard, FiImage, FiLink, FiMic } from 'react-icons/fi';
+import { FiClipboard, FiImage, FiLink} from 'react-icons/fi';
 import { MdArrowUpward, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { useAuth } from 'auth/AuthContext';
 import { API_ROUTES } from 'api/apiRoutes';
