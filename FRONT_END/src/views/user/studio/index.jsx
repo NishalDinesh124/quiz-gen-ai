@@ -640,7 +640,7 @@ export default function Studio() {
               </Text>
             </Flex>
 
-            <SimpleGrid columns={{ base: 2, md: 3 }} gap="16px" mt="22px">
+            <SimpleGrid columns={{ base: 1, md: 3 }} gap="16px" mt="22px">
               {INPUT_OPTIONS.map((option) => (
                 <Button
                   key={option.id}
