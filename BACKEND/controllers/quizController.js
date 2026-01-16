@@ -34,6 +34,17 @@ const getMaxTokens = () => {
   return Number.isFinite(value) && value > 0 ? value : 4096;
 };
 
+const isCommandOnlyChunks = (chunks) => {
+  if (!Array.isArray(chunks) || chunks.length === 0) return false;
+  const joined = chunks.join(" ").trim();
+  if (!joined) return false;
+  const stripped = joined
+    .replace(/@(?:flashcards?|quiz(?:zes)?|notes?)\b/gi, "")
+    .replace(/\s+/g, "")
+    .trim();
+  return stripped.length === 0;
+};
+
 const extractJSONArray = (raw) => {
   if (!raw) return null;
   const parsed = safeJSONParse(raw);
@@ -300,6 +311,9 @@ export const generateQuiz = async (req, res) => {
     }
 
     let resolvedChunks = normalizeChunks(chunks);
+    if (isCommandOnlyChunks(resolvedChunks)) {
+      resolvedChunks = [];
+    }
     let resolvedSourceType = sourceType;
     let resolvedSourceValue = sourceValue;
     let contextFromStore = null;
@@ -699,6 +713,9 @@ export const regenerateQuiz = async (req, res) => {
     } = req.body;
 
     let resolvedChunks = normalizeChunks(chunks);
+    if (isCommandOnlyChunks(resolvedChunks)) {
+      resolvedChunks = [];
+    }
     let resolvedSourceType = sourceType;
     let resolvedSourceValue = sourceValue;
 

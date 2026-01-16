@@ -32,6 +32,17 @@ const getMaxTokens = () => {
   return Number.isFinite(value) && value > 0 ? value : 4096;
 };
 
+const isCommandOnlyChunks = (chunks) => {
+  if (!Array.isArray(chunks) || chunks.length === 0) return false;
+  const joined = chunks.join(" ").trim();
+  if (!joined) return false;
+  const stripped = joined
+    .replace(/@(?:flashcards?|quiz(?:zes)?|notes?)\b/gi, "")
+    .replace(/\s+/g, "")
+    .trim();
+  return stripped.length === 0;
+};
+
 const extractUrlFromChunks = (chunks) => {
   if (!Array.isArray(chunks) || chunks.length === 0) return "";
   const candidate = String(chunks[0] || "");
@@ -174,6 +185,9 @@ export const generateNotes = async (req, res) => {
     }
 
     let resolvedChunks = normalizeChunks(chunks);
+    if (isCommandOnlyChunks(resolvedChunks)) {
+      resolvedChunks = [];
+    }
     let resolvedSourceType = sourceType;
     let resolvedSourceValue = sourceValue;
     let contextFromStore = null;

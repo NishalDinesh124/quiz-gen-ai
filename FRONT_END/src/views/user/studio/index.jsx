@@ -39,7 +39,6 @@ const INPUT_OPTIONS = [
   },
   { id: 'link', label: 'Link', subtext: 'YouTube, Website', icon: FiLink },
   { id: 'paste', label: 'Paste', subtext: 'Copied Text', icon: FiClipboard },
-  { id: 'record', label: 'Record', subtext: 'Record Lecture', icon: FiMic },
 ];
 
 const DEFAULT_CATEGORY = 'Education';
@@ -240,8 +239,6 @@ export default function Studio() {
         ? chunkInput({ text: pasteValue.trim() })
       : linkValue.trim().length > 0
         ? chunkInput({ url: linkValue.trim() })
-        : rawPrompt
-        ? chunkInput({ text: rawPrompt })
         : [];
     const resolvedSourceType = imageData
       ? 'image'
@@ -643,7 +640,7 @@ export default function Studio() {
               </Text>
             </Flex>
 
-            <SimpleGrid columns={{ base: 2, md: 4 }} gap="16px" mt="22px">
+            <SimpleGrid columns={{ base: 2, md: 3 }} gap="16px" mt="22px">
               {INPUT_OPTIONS.map((option) => (
                 <Button
                   key={option.id}
